@@ -1,28 +1,24 @@
-name: Daily Commit Bot
-
-permissions:
-  contents: write
+name: Daily Commit
 
 on:
   schedule:
-    - cron: "*/2 * * * *"
+    - cron: "0 0 * * *"
   workflow_dispatch:
 
 jobs:
-  commit:
+  commit-job:
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v3
 
-      - name: Make daily update
+      - name: Update file
         run: |
-          echo "Last update: $(date)" >> daily-log.txt
+          echo "Last update: $(date)" > daily.txt
 
       - name: Commit changes
         run: |
-          git config --global user.name "Akshad Bot"
-          git config --global user.email "akshad-bot@users.noreply.github.com"
-          git add .
-          git commit -m "Daily automated commit" || exit 0
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+          git add daily.txt
+          git commit -m "Daily auto commit"
           git push
