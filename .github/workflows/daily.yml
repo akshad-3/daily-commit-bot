@@ -2,8 +2,11 @@ name: Daily Commit Bot
 
 on:
   schedule:
-    - cron: "30 0 * * *"  # 6:00 AM IST
+    - cron: "30 0 * * *" # 6:00 AM IST
   workflow_dispatch:
+
+permissions:
+  contents: write
 
 jobs:
   commit:
@@ -12,13 +15,14 @@ jobs:
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v3
+        with:
+          persist-credentials: true
 
-       - name: Make Daily Commit
-    run: |
-      echo "Last run: $(date -u +'%Y-%m-%d %H:%M:%S UTC')" > daily.txt
-      git config --global user.name "akshad-3"
-      git config --global user.email "177512470+akshad-3@users.noreply.github.com"
-      git add daily.txt
-      git commit -m "Daily automated commit - $(date -u +'%Y-%m-%d')"
-      git push origin main
-
+      - name: Make Daily Commit
+        run: |
+          echo "Last run: $(date -u +'%Y-%m-%d %H:%M:%S UTC')" > daily.txt
+          git config --global user.name "akshad-3"
+          git config --global user.email "177512470+akshad-3@users.noreply.github.com"
+          git add daily.txt
+          git commit -m "Daily automated commit - $(date -u +'%Y-%m-%d')"
+          git push origin main
