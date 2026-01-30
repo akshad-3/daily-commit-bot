@@ -13,11 +13,12 @@ jobs:
       - name: Checkout Repo
         uses: actions/checkout@v3
 
-      - name: Make Daily Commit
-        run: |
-          echo "Last run: $(date)" >> daily.txt
-          git config --global user.name "Akshad Bot"
-          git config --global user.email "akshad@users.noreply.github.com"
-          git add .
-          git commit -m "Daily automated commit"
-          git push
+       - name: Make Daily Commit
+    run: |
+      echo "Last run: $(date -u +'%Y-%m-%d %H:%M:%S UTC')" > daily.txt
+      git config --global user.name "akshad-3"
+      git config --global user.email "177512470+akshad-3@users.noreply.github.com"
+      git add daily.txt
+      git commit -m "Daily automated commit - $(date -u +'%Y-%m-%d')"
+      git push origin main
+
